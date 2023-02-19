@@ -42,7 +42,7 @@ const Modal: React.FC<ModalProps> = ({ visible, onClose }) => {
                 Big Buck Bunny
               </p>
               <div className="flex flex-row gap-4 items-center">
-                <PlayButton />
+                <PlayButton movieId="" />
                 <PlusButton />
               </div>
             </div>

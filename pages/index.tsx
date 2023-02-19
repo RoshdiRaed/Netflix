@@ -6,6 +6,7 @@ import MovieList from '../components/movie-list';
 import Modal from '../components/modal';
 import { NextPageContext } from 'next';
 import { getSession } from 'next-auth/react';
+import useMovies from '@/hooks/useMovies';
 
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
@@ -25,8 +26,9 @@ export async function getServerSideProps(context: NextPageContext) {
 }
 
 const Home = () => {
-  const [showModal, setShowModal] = useState(false);
+  const { data = [] } = useMovies();
 
+  const [showModal, setShowModal] = useState(false);
   const openModal = useCallback(() => setShowModal(true), []);
 
   return (
@@ -34,7 +36,7 @@ const Home = () => {
       <Modal visible={showModal} onClose={() => setShowModal(false)} />
       <Navbar />
       <Billboard openModal={openModal} />
-      <MovieList openModal={openModal} />
+      <MovieList data={data} openModal={openModal} />
     </>
   )
 }

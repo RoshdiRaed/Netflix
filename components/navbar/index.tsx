@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { BellIcon, MagnifyingGlassIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 
-import AccountMenu from './account-menu';
-import MobileMenu from './mobile-menu';
-import NavbarItem from './navbar-item';
+import AccountMenu from './account';
+import MobileMenu from './mobile';
+import NavbarItem from './item';
 
 const TOP_OFFSET = 66;
 
@@ -28,8 +28,6 @@ const Navbar = () => {
       window.removeEventListener('scroll', handleScroll);
     }
   }, []);
-
-  console.log({showBackground})
 
   const toggleAccountMenu = useCallback(() => {
     setShowAccountMenu((current) => !current);

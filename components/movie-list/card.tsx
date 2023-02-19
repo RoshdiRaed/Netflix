@@ -1,20 +1,23 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import { PlayIcon } from '@heroicons/react/24/solid';
-import PlusButton from './plus-button';
+import PlusButton from '../plus-button';
 import { useRouter } from 'next/router';
+import { MovieInterface } from '@/types';
 
-interface MovieItemProps {
-  img: string;
+interface MovieCardProps {
+  data: MovieInterface;
   openModal: any;
 }
 
-const MovieItem: React.FC<MovieItemProps> = ({ img, openModal }) => {
+const MovieCard: React.FC<MovieCardProps> = ({ data, openModal }) => {
   const router = useRouter();
 
+  const redirectToWatch = useCallback(() => router.push(`/watch/${data.id}`), [router, data.id]);
+
   return (
-    <div className="group bg-zinc-900 col-span relative">
-      <img onClick={() => router.push('/watch')} src={img} alt="Movie" draggable={false} className="
+    <div className="group bg-zinc-900 col-span relative h-full">
+      <img onClick={redirectToWatch} src={data.thumbnailUrl} alt="Movie" draggable={false} className="
         cursor-pointer
         object-cover
         transition
@@ -25,6 +28,7 @@ const MovieItem: React.FC<MovieItemProps> = ({ img, openModal }) => {
         sm:group-hover:opacity-0
         delay-300
         w-full
+        h-full
       " />
       <div className="
         opacity-0
@@ -43,7 +47,7 @@ const MovieItem: React.FC<MovieItemProps> = ({ img, openModal }) => {
         group-hover:translate-x-[2vw]
         group-hover:opacity-100
       ">
-        <img onClick={() => router.push('/watch')} src={img} alt="Movie" draggable={false} className="
+        <img onClick={redirectToWatch} src={data.thumbnailUrl} alt="Movie" draggable={false} className="
           cursor-pointer
           object-cover
           transition
@@ -51,6 +55,7 @@ const MovieItem: React.FC<MovieItemProps> = ({ img, openModal }) => {
           shadow-xl
           rounded-t-md
           w-full
+          h-full
         " />
         <div className="
           z-10
@@ -64,7 +69,7 @@ const MovieItem: React.FC<MovieItemProps> = ({ img, openModal }) => {
           rounded-b-md
           ">
           <div className="flex flex-row items-center gap-3">
-            <div onClick={() => router.push('/watch')} className="cursor-pointer w-6 h-6 lg:w-10 lg:h-10 bg-white rounded-full flex justify-center items-center transition hover:bg-neutral-300">
+            <div onClick={redirectToWatch} className="cursor-pointer w-6 h-6 lg:w-10 lg:h-10 bg-white rounded-full flex justify-center items-center transition hover:bg-neutral-300">
               <PlayIcon className="text-black w-4 lg:w-6" />
             </div>
             <PlusButton />
@@ -92,4 +97,4 @@ const MovieItem: React.FC<MovieItemProps> = ({ img, openModal }) => {
   )
 }
 
-export default MovieItem;
+export default MovieCard;

@@ -22,6 +22,7 @@ model User {
   updatedAt DateTime @updatedAt
   sessions Session[]
   accounts Account[]
+  movieIds String[] @db.ObjectId
 }
 
 model Account {
@@ -58,4 +59,12 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Movie {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  title String
+  description String
+  videoUrl String
+  thumbnailUrl String
 }
