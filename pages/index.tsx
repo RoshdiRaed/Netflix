@@ -1,35 +1,42 @@
-import { useMemo } from 'react';
-import { useSession, signOut } from 'next-auth/react';
-import { Button,  VStack } from '@chakra-ui/react';
-import { useRouter } from 'next/router';
+import React, { useCallback, useState } from 'react';
 
-const Home: React.FC = () => {
-  const router = useRouter();
-  const { data: session } = useSession();
+import Navbar from '../components/navbar';
+import Billboard from '../components/billboard';
+import MovieList from '../components/movie-list';
+import Modal from '../components/modal';
+import { NextPageContext } from 'next';
+import { getSession } from 'next-auth/react';
 
-  const isLoggedIn = useMemo(() => !!session?.user?.email, [session?.user?.email]);
+export async function getServerSideProps(context: NextPageContext) {
+  const session = await getSession(context);
 
-  return (
-    <VStack>
-      <h1>Home Page - Unprotected</h1>
-
-      {isLoggedIn && (
-          <>
-            <p>Logged in as {session?.user?.email}</p>
-            <Button onClick={() => signOut()}>Logout</Button>
-          </>
-        )
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/auth',
+        permanent: false,
       }
+    }
+  }
 
-      {!isLoggedIn && (
-        <>
-          <p>Not logged in</p>
-          <Button onClick={() => router.push('/auth')}>Login</Button>
-        </>
-      )}
-    </VStack>
-  )
+  return {
+    props: {}
+  }
 }
 
+const Home = () => {
+  const [showModal, setShowModal] = useState(false);
+
+  const openModal = useCallback(() => setShowModal(true), []);
+
+  return (
+    <>
+      <Modal visible={showModal} onClose={() => setShowModal(false)} />
+      <Navbar />
+      <Billboard openModal={openModal} />
+      <MovieList openModal={openModal} />
+    </>
+  )
+}
 
 export default Home;
