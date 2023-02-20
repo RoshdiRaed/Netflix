@@ -15,7 +15,7 @@ const InfoModal: React.FC<InfoModalProps> = ({ visible, onClose }) => {
   const [isVisible, setIsVisible] = useState<boolean>(!!visible);
 
   const { movieId } = useInfoModalStore();
-  const { data } = useMovie(movieId);
+  const { data = {} } = useMovie(movieId);
 
   useEffect(() => {
     setIsVisible(!!visible);
@@ -59,17 +59,11 @@ const InfoModal: React.FC<InfoModalProps> = ({ visible, onClose }) => {
                 New
               </p>
               <p className="text-white text-lg">
-                2023
+                {data?.duration}
               </p>
-              <div className="border-[1px] border-slate-300 p-1 text-[8px] lg:text-xs text-gray-300">
-                13+
-              </div>
               <p className="text-white text-lg">
-                6 episodes
+                {data?.genre}
               </p>
-              <div className="border-[1px] border-slate-300 p-1 text-[6px] lg:text-[8px] text-gray-300">
-                HD
-              </div>
             </div>
             <p className="text-white text-lg">
               {data?.description}

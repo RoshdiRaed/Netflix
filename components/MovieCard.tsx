@@ -79,16 +79,14 @@ const MovieCard: React.FC<MovieCardProps> = ({ data }) => {
               <ChevronDownIcon className="text-white group-hover/item:text-neutral-300 w-4 lg:w-6" />
             </div>
           </div>
+          <p className="text-green-400 font-semibold mt-4">
+            New <span className="text-white">2023</span>
+          </p>
           <div className="flex flex-row mt-4 gap-2 items-center"> 
             <p className="text-white text-[10px] lg:text-sm">{data.duration}</p>
-            <div className="border-[1px] border-slate-300 p-1 text-[6px] lg:text-[8px] text-gray-300">
-              HD
-            </div>
           </div>
           <div className="flex flex-row items-center gap-2 mt-4 text-[8px] text-white lg:text-sm">
-            <p>Witty</p>
-            <p>Irrevent</p>
-            <p>Sitcom</p>
+            <p>{data.genre}</p>
           </div>
         </div>
       </div>
