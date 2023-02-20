@@ -26,6 +26,7 @@
     "eslint-config-next": "13.1.6",
     "formik": "^2.2.9",
     "framer-motion": "^9.0.4",
+    "lodash": "^4.17.21",
     "mongodb": "^4.14.0",
     "mongoose": "^6.9.2",
     "next": "13.1.6",
@@ -34,7 +35,8 @@
     "react-dom": "18.2.0",
     "react-icons": "^4.7.1",
     "swr": "^2.0.3",
-    "typescript": "4.9.5"
+    "typescript": "4.9.5",
+    "zustand": "^4.3.3"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",

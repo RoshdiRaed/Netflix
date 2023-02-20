@@ -1,7 +1,7 @@
 import React from 'react';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/router';
-import useMovieId from '@/hooks/useMovieId';
+import useMovie from '@/hooks/useMovie';
 import { NextPageContext } from 'next';
 import { getSession } from 'next-auth/react';
 
@@ -26,7 +26,7 @@ const Watch = () => {
   const router = useRouter();
   const { movieId } = router.query;
 
-  const { data } = useMovieId(movieId as string);
+  const { data } = useMovie(movieId as string);
   
   return (
     <div className="h-screen w-screen bg-black">

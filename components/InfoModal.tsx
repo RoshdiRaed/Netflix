@@ -1,16 +1,21 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
-import PlayButton from './play-button';
-import PlusButton from './plus-button';
+import PlayButton from '@/components/PlayButton';
+import FavoriteButton from '@/components/FavoriteButton';
+import useInfoModalStore from '@/hooks/useInfoModalStore';
+import useMovie from '@/hooks/useMovie';
 
-interface ModalProps {
+interface InfoModalProps {
   visible?: boolean;
   onClose: any;
 }
 
-const Modal: React.FC<ModalProps> = ({ visible, onClose }) => {
+const InfoModal: React.FC<InfoModalProps> = ({ visible, onClose }) => {
   const [isVisible, setIsVisible] = useState<boolean>(!!visible);
+
+  const { movieId } = useInfoModalStore();
+  const { data } = useMovie(movieId);
 
   useEffect(() => {
     setIsVisible(!!visible);
@@ -33,17 +38,17 @@ const Modal: React.FC<ModalProps> = ({ visible, onClose }) => {
         <div className={`${isVisible ? 'scale-100' : 'scale-0'} transform duration-300 relative flex-auto bg-zinc-900 drop-shadow-md`}>
 
           <div className="relative">
-            <video poster="/images/poster.png" autoPlay muted loop src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" className="w-full brightness-[60%]" alt="Hero" />
+            <video poster={data?.thumbnailUrl} autoPlay muted loop src={data?.videoUrl} className="w-full brightness-[60%]" />
             <div onClick={handleClose} className="cursor-pointer absolute top-3 right-3 h-10 w-10 rounded-full bg-black bg-opacity-70 flex items-center justify-center">
               <XMarkIcon className="text-white w-6" />
             </div>
             <div className="absolute bottom-[10%] left-10">
               <p className="text-white text-3xl md:text-4xl h-full lg:text-5xl font-bold mb-8">
-                Big Buck Bunny
+                {data?.title}
               </p>
               <div className="flex flex-row gap-4 items-center">
-                <PlayButton movieId="" />
-                <PlusButton />
+                <PlayButton movieId={data?.id} />
+                <FavoriteButton movieId={data?.id} />
               </div>
             </div>
           </div>
@@ -67,7 +72,7 @@ const Modal: React.FC<ModalProps> = ({ visible, onClose }) => {
               </div>
             </div>
             <p className="text-white text-lg">
-              Three rodents amuse themselves by harassing creatures of the forest. However, when they mess with a bunny, he decides to teach them a lesson.
+              {data?.description}
             </p>
           </div>
 
@@ -77,4 +82,4 @@ const Modal: React.FC<ModalProps> = ({ visible, onClose }) => {
   );
 }
 
-export default Modal;
+export default InfoModal;

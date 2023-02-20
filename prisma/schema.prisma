@@ -22,7 +22,7 @@ model User {
   updatedAt DateTime @updatedAt
   sessions Session[]
   accounts Account[]
-  movieIds String[] @db.ObjectId
+  favoriteIds String[] @db.ObjectId
 }
 
 model Account {

@@ -1,12 +1,14 @@
-import React, { useCallback, useState } from 'react';
-
-import Navbar from '../components/navbar';
-import Billboard from '../components/billboard';
-import MovieList from '../components/movie-list';
-import Modal from '../components/modal';
+import React from 'react';
 import { NextPageContext } from 'next';
 import { getSession } from 'next-auth/react';
-import useMovies from '@/hooks/useMovies';
+
+import Navbar from '@/components/Navbar';
+import Billboard from '@/components/Billboard';
+import MovieList from '@/components/MovieList';
+import InfoModal from '@/components/InfoModal';
+import useMovieList from '@/hooks/useMovieList';
+import useFavorites from '@/hooks/useFavorites';
+import useInfoModalStore from '@/hooks/useInfoModalStore';
 
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
@@ -26,17 +28,17 @@ export async function getServerSideProps(context: NextPageContext) {
 }
 
 const Home = () => {
-  const { data = [] } = useMovies();
-
-  const [showModal, setShowModal] = useState(false);
-  const openModal = useCallback(() => setShowModal(true), []);
+  const { data: movies = [] } = useMovieList();
+  const { data: favorites = [] } = useFavorites();
+  const {isOpen, closeModal} = useInfoModalStore();
 
   return (
     <>
-      <Modal visible={showModal} onClose={() => setShowModal(false)} />
+      <InfoModal visible={isOpen} onClose={closeModal} />
       <Navbar />
-      <Billboard openModal={openModal} />
-      <MovieList data={data} openModal={openModal} />
+      <Billboard />
+      <MovieList title="Trending Now" data={movies} />
+      <MovieList title="My List" data={favorites} />
     </>
   )
 }

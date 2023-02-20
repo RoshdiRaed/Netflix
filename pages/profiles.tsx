@@ -1,7 +1,9 @@
 import { NextPageContext } from "next";
-import { getSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
+
+import useCurrentUser from "@/hooks/useCurrentUser";
 
 const images = [
   '/images/default-blue.png',
@@ -11,7 +13,6 @@ const images = [
 ]
 
 interface UserCardProps {
-  index: number;
   name: string;
 }
 
@@ -32,8 +33,8 @@ export async function getServerSideProps(context: NextPageContext) {
   }
 }
 
-const UserCard: React.FC<UserCardProps> = ({ index, name }) => {
-  const imgSrc = images[index];
+const UserCard: React.FC<UserCardProps> = ({ name }) => {
+  const imgSrc = images[Math.floor(Math.random() * 4)];
 
   return (
     <div className="group flex-row w-44 mx-auto">
@@ -47,6 +48,7 @@ const UserCard: React.FC<UserCardProps> = ({ index, name }) => {
 
 const App = () => {
   const router = useRouter();
+  const { data: currentUser } = useCurrentUser();
 
   const selectProfile = useCallback(() => {
     router.push('/');
@@ -56,15 +58,10 @@ const App = () => {
     <div className="flex items-center h-full justify-center">
       <div className="flex flex-col">
         <h1 className="text-6xl text-white text-center">Who's watching?</h1>
-        <div className="block space-y-8 md:space-y-0 md:flex gap-8 mt-10">
-          {["Antonio", "John", "Mark", "Justin"].map((name, i)  => (
-            <div key={name} onClick={() => selectProfile()}>
-              <UserCard index={i} name={name} />
-            </div>
-          ))}
-        </div>
-        <div className="text-xl hover:cursor-pointer hover:border-white hover:text-white border-2 border-gray-400 w-max px-8 py-2 text-gray-400 mt-20 self-center">
-          Manage Profiles
+        <div className="flex items-center justify-center gap-8 mt-10">
+          <div onClick={() => selectProfile()}>
+            <UserCard name={currentUser?.name} />
+          </div>
         </div>
       </div>
     </div>
