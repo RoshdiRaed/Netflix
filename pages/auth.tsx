@@ -85,7 +85,7 @@ const Auth = () => {
                   type="text"
                   label="Username"
                   value={name}
-                  onChange={(e) => setName(e.target.value)} 
+                  onChange={(e: any) => setName(e.target.value)} 
                 />
               )}
               <Input
@@ -93,14 +93,14 @@ const Auth = () => {
                 type="email"
                 label="Email address or phone number"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)} 
+                onChange={(e: any) => setEmail(e.target.value)} 
               />
               <Input
                 type="password" 
                 id="password" 
                 label="Password" 
                 value={password}
-                onChange={(e) => setPassword(e.target.value)} 
+                onChange={(e: any) => setPassword(e.target.value)} 
               />
             </div>
             <button onClick={variant === 'login' ? login : register} className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition">
