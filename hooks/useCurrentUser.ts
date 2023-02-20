@@ -5,7 +5,8 @@ import fetcher from '@/libs/fetcher';
 
 const useCurrentUser = () => {
   const { data: session } = useSession();
-  const { data, error, isLoading, mutate } = useSwr(`/api/users/${session?.user?.email}`, fetcher);
+  const userEmail = session?.user?.email;
+  const { data, error, isLoading, mutate } = useSwr(userEmail ? `/api/users/${userEmail}` : null, fetcher);
   return {
     data,
     error,

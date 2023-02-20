@@ -80,10 +80,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ data }) => {
             </div>
           </div>
           <div className="flex flex-row mt-4 gap-2 items-center"> 
-            <div className="border-[1px] border-slate-300 p-1 text-[8px] lg:text-xs text-gray-300">
-              13+
-            </div>
-            <p className="text-white text-[10px] lg:text-sm">9 Seasons</p>
+            <p className="text-white text-[10px] lg:text-sm">{data.duration}</p>
             <div className="border-[1px] border-slate-300 p-1 text-[6px] lg:text-[8px] text-gray-300">
               HD
             </div>
