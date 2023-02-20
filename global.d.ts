@@ -3,6 +3,6 @@ import type { MongoClient } from 'mongodb';
 
 declare global {
   namespace globalThis {
-    var prisma: PrismaClient
+    var prismadb: PrismaClient
   }
 }
